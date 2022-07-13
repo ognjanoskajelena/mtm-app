@@ -22,4 +22,15 @@ public class Dose {
 
     @OneToOne
     private Drug drug;
+
+    public Dose(Integer times, Integer pills) {
+        this.times = times;
+        this.pills = pills;
+    }
+
+    public Dose(Integer times, Integer pills, Drug drug) {
+        this.times = times;
+        this.pills = pills;
+        this.drug = drug;
+    }
 }

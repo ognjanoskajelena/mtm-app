@@ -29,9 +29,25 @@ public class Drug {
 
     private Integer stockpile;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "drug", orphanRemoval = true)
     private Collection<SideEffect> sideEffects = new ArrayList<>();
 
     @ManyToOne
     private MedicalTherapy medicalTherapy;
+
+    public Drug(String name, Dose dose, Use use, Integer stockpile, MedicalTherapy medicalTherapy) {
+        this.name = name;
+        this.dose = dose;
+        this.use = use;
+        this.stockpile = stockpile;
+        this.medicalTherapy = medicalTherapy;
+    }
+
+    public void addSideEffect(SideEffect sideEffect) {
+        this.sideEffects.add(sideEffect);
+    }
+
+    public void removeSideEffect(SideEffect sideEffect) {
+        this.sideEffects.remove(sideEffect);
+    }
 }

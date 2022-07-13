@@ -28,4 +28,10 @@ public class MedicalTherapy {
 
     @OneToMany(mappedBy = "medicalTherapy", orphanRemoval = true)
     private Collection<Drug> drugs = new ArrayList<>();
+
+    public MedicalTherapy(String name, String details, User user) {
+        this.name = name;
+        this.details = details;
+        this.user = user;
+    }
 }

@@ -37,4 +37,14 @@ public class User {
 
     @OneToMany(mappedBy = "user", orphanRemoval = true)
     private Collection<MedicalTherapy> medicalTherapies = new ArrayList<>();
+
+    public User(String name, String surname, String username, String password, String email, Integer age) {
+        this.name = name;
+        this.surname = surname;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.age = age;
+        this.role = Role.ROLE_USER;
+    }
 }

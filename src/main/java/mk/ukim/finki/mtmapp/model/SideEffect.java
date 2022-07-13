@@ -16,8 +16,14 @@ public class SideEffect {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-
     @Column(length = 1024)
-    private String description;
+    private String details;
+
+    @ManyToOne
+    private Drug drug;
+
+    public SideEffect(String details, Drug drug) {
+        this.details = details;
+        this.drug = drug;
+    }
 }
