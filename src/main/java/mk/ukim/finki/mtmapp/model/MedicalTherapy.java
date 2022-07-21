@@ -23,7 +23,7 @@ public class MedicalTherapy {
     @Column(length = 1024)
     private String details;
 
-    @ManyToOne
+    @OneToOne
     private User user;
 
     @OneToMany(mappedBy = "medicalTherapy", orphanRemoval = true)

@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import mk.ukim.finki.mtmapp.model.enums.Role;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
 
 @Data
 @NoArgsConstructor
@@ -35,8 +33,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "user", orphanRemoval = true)
-    private Collection<MedicalTherapy> medicalTherapies = new ArrayList<>();
+    @OneToOne
+    private MedicalTherapy medicalTherapy;
 
     public User(String name, String surname, String username, String password, String email, Integer age) {
         this.name = name;
