@@ -21,6 +21,7 @@ public class HomeController {
     public String getAboutUsPage(Model model) {
         model.addAttribute("headTitle", "About us");
         model.addAttribute("style1", "header.css");
+        model.addAttribute("style2", "about-us.css");
         model.addAttribute("bodyContent", "about-us");
         return "master-template";
     }
