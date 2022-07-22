@@ -1,0 +1,55 @@
+.home-main {
+    background: #b9b9b9;
+    color: #fff;
+    padding: 13%;
+    text-align: center;
+}
+
+.blinker {
+    animation: blinker 1.5s linear infinite;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+
+.home-main a {
+    background: #fff;
+    color: #b9b9b9;
+    border-radius: 0;
+    font-weight: 700;
+    width: 15%;
+    margin-top: 3%;
+}
+
+.home-main a:hover {
+    transition: 1s ease;
+    color: #b9b9b9;
+    width: 17%;
+}
+
+.content1-left {
+    padding: 9%;
+}
+
+.content1-right {
+    padding: 9%;
+    background: #e4e4e4;
+}
+
+.home-content2 {
+    background: #adb5bd;
+    padding: 1.4%;
+    text-align: center;
+}
+
+.home-content2 p {
+    font-size: 18px;
+    line-height: 50px;
+}
+
+.home-content2 p span {
+    font-weight: 500;
+}

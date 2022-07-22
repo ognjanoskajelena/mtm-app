@@ -13,6 +13,7 @@ public class HomeController {
     public String getHomePage(Model model) {
         model.addAttribute("headTitle", "Home");
         model.addAttribute("style1", "header.css");
+        model.addAttribute("style2", "home.css");
         model.addAttribute("bodyContent", "home");
         return "master-template";
     }

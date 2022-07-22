@@ -1,0 +1,111 @@
+<div class="container user">
+    <div class="row">
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="account-settings">
+                        <div class="user-profile">
+                            <div class="user-avatar">
+                                <img src="./img/user.png" alt="User picture">
+                            </div>
+                            <h5 class="user-name" th:text="${user.name} + ' ' + ${user.surname}"></h5>
+                            <h6 class="user-email" th:text="${user.email}"></h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+            <div class="card h-100">
+                <form th:method="POST" th:action="@{'/user/{id}/edit' (id=${user.id})}">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <h6 class="mb-2 text-primary">Personal info</h6>
+                                <hr/>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            id="name"
+                                            name="name"
+                                            th:value="${user.name}"
+                                            required>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="surname">Surname</label>
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            id="surname"
+                                            name="surname"
+                                            th:value="${user.surname}"
+                                            required>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="username">Username</label>
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            id="username"
+                                            name="username"
+                                            th:value="${user.username}"
+                                            required>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input
+                                            type="password"
+                                            class="form-control"
+                                            id="password"
+                                            name="password"
+                                            placeholder="Enter new password">
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="email">E-mail address</label>
+                                    <input type="email"
+                                           class="form-control"
+                                           id="email"
+                                           name="email"
+                                           th:value="${user.email}"
+                                           required>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="age">Age</label>
+                                    <input type="number"
+                                           class="form-control"
+                                           id="age"
+                                           name="age"
+                                           th:value="${user.age}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3 mb-0">
+                                <div class="text-right">
+                                    <a type="button" class="btn btn-secondary" th:href="@{ '/home' }">Back</a>
+                                    <button class="btn btn-primary" type="submit">
+                                        Update
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
