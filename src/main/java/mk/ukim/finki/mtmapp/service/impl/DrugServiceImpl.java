@@ -8,6 +8,7 @@ import mk.ukim.finki.mtmapp.model.MedicalTherapy;
 import mk.ukim.finki.mtmapp.model.SideEffect;
 import mk.ukim.finki.mtmapp.model.enums.Use;
 import mk.ukim.finki.mtmapp.model.form.DoseForm;
+import mk.ukim.finki.mtmapp.repository.DoseRepository;
 import mk.ukim.finki.mtmapp.repository.DrugRepository;
 import mk.ukim.finki.mtmapp.repository.MedicalTherapyRepository;
 import mk.ukim.finki.mtmapp.service.DrugService;
@@ -23,6 +24,7 @@ public class DrugServiceImpl implements DrugService {
 
     private final DrugRepository drugRepository;
     private final MedicalTherapyRepository medicalTherapyRepository;
+    private final DoseRepository doseRepository;
 
     @Override
     public Optional<Drug> findById(Long id) {
@@ -46,12 +48,16 @@ public class DrugServiceImpl implements DrugService {
     }
 
     @Override
-    public Drug update(Long id, String name, DoseForm dose, Use use, Integer stockpile) {
+    public Drug update(Long id, String name, DoseForm doseForm, Use use, Integer stockpile) {
         Optional<Drug> optionalDrug = this.drugRepository.findById(id);
         if (optionalDrug.isPresent()) {
             Drug drug = optionalDrug.get();
             drug.setName(name);
-            drug.setDose(new Dose(dose.getTimes(), dose.getPills()));
+
+            Dose dose = new Dose(doseForm.getTimes(), doseForm.getPills());
+            doseRepository.save(dose);
+            drug.setDose(dose);
+
             drug.setUse(use);
             drug.setStockpile(stockpile);
             log.info("Updating drug by id: {}", id);

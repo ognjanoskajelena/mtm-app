@@ -16,60 +16,58 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/med-therapy">
-                        <i class="fa fa-medkit">
-                            <span class="badge badge-danger">11</span>
-                        </i>
-                        My therapy
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="/about-us">
-                        <i class="fa fa-users">
-                            <span class="badge badge-warning">11</span>
-                        </i>
+                        <i class="fa fa-users"></i>
                         About us
                     </a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="/med-therapy" id="navbarDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-dashboard">
-                            <span class="badge badge-primary">11</span>
-                        </i>
-                        Dashboard
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Drugs</a>
-                        <a class="dropdown-item" href="#">Stockpile</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Edit therapy</a>
-                    </div>
-                </li>
+                <!--                <li class="nav-item dropdown">-->
+                <!--                    <a class="nav-link dropdown-toggle" href="/med-therapy" id="navbarDropdown" role="button"-->
+                <!--                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                <!--                        <i class="fa fa-dashboard">-->
+                <!--                            <span class="badge badge-primary">11</span>-->
+                <!--                        </i>-->
+                <!--                        Dashboard-->
+                <!--                    </a>-->
+                <!--                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+                <!--                        <a class="dropdown-item" href="#">Drugs</a>-->
+                <!--                        <a class="dropdown-item" href="#">Stockpile</a>-->
+                <!--                        <div class="dropdown-divider"></div>-->
+                <!--                        <a class="dropdown-item" href="#">Edit therapy</a>-->
+                <!--                    </div>-->
+                <!--                </li>-->
             </ul>
-            <ul class="navbar-nav ">
+            <ul class="navbar-nav" th:if="${#request.getRemoteUser() != null}">
                 <li class="nav-item">
                     <a class="nav-link" href="#">
                         <i class="fa fa-bell">
-                            <span class="badge badge-info">11</span>
+                            <span class="badge badge-success">11</span>
                         </i>
                         Notifications
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fa fa-globe">
-                            <span class="badge badge-success">11</span>
-                        </i>
-                        Similar
+                    <a class="nav-link" href="/med-therapy">
+                        <i class="fa fa-medkit"></i>
+                        My therapy
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user">
+                        <i class="fa fa-user"></i>
+                        Profile
                     </a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <a href="/register" class="btn btn-info my-2 my-sm-0 mr-1">Sign up</a>
-                <a href="/login" class="btn btn-primary my-2 my-sm-0 mr-1">Sign in</a>
-                <a href="/logout" class="btn btn-outline-light my-2 my-sm-0">Logout</a>
-            </form>
+            <div class="my-2 ml-3 my-lg-0">
+                <a href="/login" class="btn btn-primary my-2 my-sm-0 mr-1" th:if="${#request.getRemoteUser() == null}">
+                    Sign in
+                </a>
+                <a href="/logout" class="btn btn-outline-light my-2 my-sm-0"
+                   th:if="${#request.getRemoteUser() != null}">
+                    Logout
+                </a>
+            </div>
         </div>
     </nav>
 

@@ -10,4 +10,6 @@ public interface UserService {
     Optional<User> findByUsername(String username);
 
     User save(User user);
+
+    User update(Long id, String name, String surname, String username, String password, String email, Integer age);
 }
