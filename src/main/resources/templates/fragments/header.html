@@ -39,12 +39,16 @@
             </ul>
             <ul class="navbar-nav" th:if="${#request.getRemoteUser() != null}">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="#" id="notifications-menu-btn">
                         <i class="fa fa-bell">
-                            <span class="badge badge-success">11</span>
+                            <span class="badge badge-success" id="notifications-count"></span>
                         </i>
                         Notifications
                     </a>
+                    <th:block th:if="${#authentication.getPrincipal()} != null">
+                        <div class="notification-list" style="display: none; position: absolute; z-index: 999;">
+                        </div>
+                    </th:block>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/med-therapy">

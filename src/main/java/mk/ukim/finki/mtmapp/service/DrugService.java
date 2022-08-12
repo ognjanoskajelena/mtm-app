@@ -22,4 +22,6 @@ public interface DrugService {
     Drug removeSideEffect(SideEffect sideEffect, Long drugId);
 
     void removeAllSideEffects(Long id);
+
+    void getDrug(Long id);
 }

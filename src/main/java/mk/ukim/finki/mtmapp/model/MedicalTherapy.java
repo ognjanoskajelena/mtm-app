@@ -2,10 +2,13 @@ package mk.ukim.finki.mtmapp.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import mk.ukim.finki.mtmapp.model.enums.MedicalTherapyStatus;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -27,8 +30,15 @@ public class MedicalTherapy {
     @OneToMany(mappedBy = "medicalTherapy", orphanRemoval = true)
     private Collection<Drug> drugs;
 
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<Drug> drugsGotten;
+
+    private MedicalTherapyStatus medicalTherapyStatus;
+
     public MedicalTherapy() {
+        this.medicalTherapyStatus = MedicalTherapyStatus.UNCOMPLETED;
         this.drugs = new ArrayList<>();
+        this.drugsGotten = new HashSet<>();
     }
 
     public MedicalTherapy(String name, String details, User user) {
@@ -36,5 +46,20 @@ public class MedicalTherapy {
         this.details = details;
         this.user = user;
         this.drugs = new ArrayList<>();
+        this.drugsGotten = new HashSet<>();
+        this.medicalTherapyStatus = MedicalTherapyStatus.UNCOMPLETED;
+    }
+
+    public void addDrugsGotten(Drug drug) {
+        this.drugsGotten.add(drug);
+    }
+
+    public void completeTherapy() {
+        this.medicalTherapyStatus = MedicalTherapyStatus.COMPLETED;
+    }
+
+    public void refreshTherapyStatus() {
+        this.getDrugsGotten().clear();
+        this.medicalTherapyStatus = MedicalTherapyStatus.UNCOMPLETED;
     }
 }

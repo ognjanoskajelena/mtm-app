@@ -105,4 +105,16 @@ public class DrugServiceImpl implements DrugService {
         }
         throw new RuntimeException(String.format("Drug with id: %d not found!", id));
     }
+
+    @Override
+    public void getDrug(Long id) {
+        Optional<Drug> optionalDrug = this.findById(id);
+        if (optionalDrug.isPresent()) {
+            Drug drug = optionalDrug.get();
+            drug.decreaseStockpile();
+            this.drugRepository.save(drug);
+            return;
+        }
+        throw new RuntimeException(String.format("Drug with id: %d not found!", id));
+    }
 }

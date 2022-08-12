@@ -8,6 +8,7 @@ import mk.ukim.finki.mtmapp.model.enums.Use;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -49,5 +50,22 @@ public class Drug {
 
     public void removeSideEffect(SideEffect sideEffect) {
         this.sideEffects.remove(sideEffect);
+    }
+
+    public void decreaseStockpile() {
+        this.stockpile = this.stockpile - this.dose.getPills();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Drug)) return false;
+        Drug drug = (Drug) o;
+        return id.equals(drug.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
