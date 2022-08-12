@@ -21,6 +21,12 @@ public class NotificationServiceImpl implements NotificationService {
     private final UserService userService;
 
     @Override
+    public Notification findById(Long id) {
+        return this.notificationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(String.format("Notification with id: %d not found!", id)));
+    }
+
+    @Override
     public List<Notification> getAllForUser(String username) {
         Optional<User> optionalUser = this.userService.findByUsername(username);
         if (optionalUser.isPresent()) {
@@ -34,5 +40,15 @@ public class NotificationServiceImpl implements NotificationService {
     public Notification create(User owner, String content) {
         log.info("Saving new notification for user with id: {}", owner.getId());
         return this.notificationRepository.save(new Notification(owner, content));
+    }
+
+    @Override
+    public void see(String username) {
+        List<Notification> notifications = this.getAllForUser(username);
+        log.info("Seeing notifications for user with username: {}", username);
+        for (Notification n: notifications) {
+            n.setSeen(true);
+            this.notificationRepository.save(n);
+        }
     }
 }

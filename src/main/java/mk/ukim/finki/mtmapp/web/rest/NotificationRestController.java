@@ -18,4 +18,9 @@ public class NotificationRestController {
     public List<Notification> getAllNotificationsForUser(@PathVariable String user) {
         return this.notificationService.getAllForUser(user);
     }
+
+    @GetMapping("/{user}/seen")
+    public void seeNotification(@PathVariable String user) {
+        this.notificationService.see(user);
+    }
 }

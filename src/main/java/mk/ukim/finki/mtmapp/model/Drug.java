@@ -22,8 +22,7 @@ public class Drug {
 
     private String name;
 
-    @OneToOne
-    private Dose dose;
+    private Integer dose;
 
     @Enumerated(EnumType.STRING)
     private Use use;
@@ -36,7 +35,7 @@ public class Drug {
     @ManyToOne
     private MedicalTherapy medicalTherapy;
 
-    public Drug(String name, Dose dose, Use use, Integer stockpile, MedicalTherapy medicalTherapy) {
+    public Drug(String name, Integer dose, Use use, Integer stockpile, MedicalTherapy medicalTherapy) {
         this.name = name;
         this.dose = dose;
         this.use = use;
@@ -53,7 +52,9 @@ public class Drug {
     }
 
     public void decreaseStockpile() {
-        this.stockpile = this.stockpile - this.dose.getPills();
+        if ((this.stockpile - this.dose) > 0) {
+            this.stockpile = this.stockpile - this.dose;
+        }
     }
 
     @Override

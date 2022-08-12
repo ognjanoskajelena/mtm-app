@@ -22,11 +22,14 @@ public class Notification {
 
     private String content;
 
-    private LocalDateTime sendAt;
+    private LocalDateTime sentAt;
+
+    private boolean seen;
 
     public Notification(User owner, String content) {
         this.owner = owner;
         this.content = content;
-        this.sendAt = LocalDateTime.now();
+        this.sentAt = LocalDateTime.now();
+        this.seen = false;
     }
 }
