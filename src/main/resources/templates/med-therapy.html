@@ -3,6 +3,74 @@
     <section class="pt-5 pb-5" id="med-therapy">
         <div class="container">
             <div class="row">
+
+                <div class="col-12 pb-5">
+                    <div>
+                        <button class="btn btn-dark btn-block"
+                                data-toggle="modal"
+                                data-target="#addDrugModal">
+                            Add new drug to therapy
+                        </button>
+                    </div>
+                </div>
+                <!-- Add drug modal -->
+                <div class="modal fade" id="addDrugModal" tabindex="-1" aria-labelledby="addDrugModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form th:method="post" th:action="@{'/drug/add/{therapyId}' (therapyId=${medicalTherapy.id})}">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addDrugModalLabel">Add new drug</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="name" class="col-form-label">Name</label>
+                                        <input type="text"
+                                               class="form-control"
+                                               name="name"
+                                               placeholder="Enter drug name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label">Dose</label>
+                                        <input type="number"
+                                               class="form-control mb-1"
+                                               name="dose"
+                                               placeholder="Enter drug dose"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="use" class="col-form-label">Use</label>
+                                        <select class="form-control" name="use">
+                                            <option th:each="use : ${T(mk.ukim.finki.mtmapp.model.enums.Use).values()}"
+                                                    th:value="${use}" th:text="${use}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="stockpile" class="col-form-label">Stockpile</label>
+                                        <input type="number"
+                                               class="form-control"
+                                               name="stockpile"
+                                               placeholder="Enter drug stock"/>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <input type="hidden" th:value="${medicalTherapy.medicalTherapyStatus}"
+                       id="medicalTherapyStatus">
+                <input type="hidden" th:value="${#request.userPrincipal.getName()}"
+                       id="principalName">
+
                 <div class="col-12">
                     <div class="row" th:each="drug : ${medicalTherapy.drugs}"> <!-- As many as number_of_drugs -->
                         <div class="col-12 mb-3">
@@ -10,38 +78,38 @@
                                 <div class="card-header">
                                     <ul class="nav nav-pills card-header-pills">
                                         <li class="nav-item">
-                                            <a class="nav-link more-btn" href="" data-toggle="modal"
-                                               data-target="#drugModal">Edit</a>
+                                            <a class="btn btn-warning mr-1" href="" data-toggle="modal"
+                                               th:data-target="'#editDrugModal-' + ${drug.id}">Edit</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Delete</a>
+                                            <a class="btn btn-danger" href="" data-toggle="modal"
+                                               th:data-target="'#deleteDrugModal-' + ${drug.id}">Delete</a>
                                         </li>
                                     </ul>
                                 </div>
                                 <div class="card-body">
-                                    <h5 class="card-title" th:text="${drug.name}"></h5>
-                                    <p class="card-text" th:text="${drug.use}"></p>
-                                    <p class="card-text" th:text="${drug.dose.times + 'x' + drug.dose.pills}"></p>
-                                    <a th:href="@{'/drug/'+ ${drug.id} + '/get'}" class="btn btn-primary get-drug-btn">
+                                    <h4 class="card-title"><b th:text="${drug.name}"></b></h4>
+                                    <p><span>Use <b class="card-text" th:text="${drug.use}"></b></span></p>
+                                    <p><span>Dose <b class="card-text" th:text="${drug.dose}"></b></span></p>
+                                    <a th:href="@{'/drug/'+ ${drug.id} + '/get'}" class="btn btn-primary get-drug-btn w-25"
+                                       th:data-stock="${drug.stockpile >= drug.dose}">
                                         Get
                                     </a>
                                 </div>
-                                <div class="card-footer text-muted" th:text="${drug.stockpile}">
+                                <div class="card-footer text-muted">
+                                    <span><b th:text="${drug.stockpile}"></b> more left</span>
                                 </div>
                             </div>
                         </div>
-                        <input type="hidden" th:value="${medicalTherapy.medicalTherapyStatus}"
-                               id="medicalTherapyStatus">
-                        <input type="hidden" th:value="${#request.userPrincipal.getName()}"
-                               id="principalName">
-                        <!-- Modal -->
-                        <div class="modal fade" id="drugModal" tabindex="-1" aria-labelledby="drugModalLabel"
+
+                        <!-- Edit drug modal -->
+                        <div class="modal fade" th:id="'editDrugModal-' + ${drug.id}" tabindex="-1" aria-labelledby="editDrugModalLabel"
                              aria-hidden="true">
                             <div class="modal-dialog">
                                 <form th:method="post" th:action="@{'/drug/{id}/edit' (id=${drug.id})}">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="drugModalLabel">Modify drug properties</h5>
+                                            <h5 class="modal-title" id="editDrugModalLabel">Modify drug properties</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -59,14 +127,9 @@
                                                 <label class="col-form-label">Dose</label>
                                                 <input type="number"
                                                        class="form-control mb-1"
-                                                       id="times"
-                                                       name="times"
-                                                       th:value="${drug.dose.times}"/>
-                                                <input type="number"
-                                                       class="form-control"
-                                                       id="pills"
-                                                       name="pills"
-                                                       th:value="${drug.dose.pills}"/>
+                                                       id="dose"
+                                                       name="dose"
+                                                       th:value="${drug.dose}"/>
                                             </div>
                                             <div class="form-group">
                                                 <label for="use" class="col-form-label">Use</label>
@@ -96,7 +159,32 @@
                             </div>
                         </div>
 
+                        <!-- Delete drug modal -->
+                        <div class="modal fade" th:id="'deleteDrugModal-' + ${drug.id}" tabindex="-1" role="dialog"
+                             aria-labelledby="deleteDrugModalTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteDrugModalTitle">Confirm delete</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to delete this drug?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                        </button>
+                                        <a th:href="@{'/drug/'+ ${drug.id} + '/delete'}" class="btn btn-primary">
+                                            Yes
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -107,28 +195,67 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
-        let medTherapyStatus = $("#medicalTherapyStatus").val();
-        if (medTherapyStatus === "COMPLETED") {
-            // create notification, update notifications, disable 'get-drug' buttons
-            let user = $("#principalName").val()
+        let user = $("#principalName").val();
+
+        let get_btns = $(".get-drug-btn");
+        for (let i = 0; i < get_btns.length; i++) {
+            if ($(get_btns[i]).attr("data-stock") === 'false') {
+                $(get_btns[i]).css("pointer-events", "none")
+                    .removeClass('btn-primary')
+                    .addClass('btn-danger');
+            }
+        }
+
+        updateNotifications();
+
+        $(".delete-btn").click(function (e) {
+            let id = $(e.currentTarget).attr("data-drug-id");
+
+            $.ajax({
+                type: "GET",
+                url: "/api/drug/" + id + "/delete",
+                success: function (response) {
+                    updateNotifications()
+                },
+                error: function (req, status, error) {
+                    console.log(req);
+                }
+            });
+        });
+
+        function updateNotifications() {
             $.ajax({
                 type: "GET",
                 url: "/api/notification/" + user,
                 success: function (response) {
-                    $("#notifications-count").text("1");
-                    let list = $(".notification-list");
+                    let notif_count = 0;
+
+                    let list = $(".notification-list").empty();
                     for (let i = 0; i < response.length; i++) {
+                        let sentAt = response[i].sentAt.split("T");
+                        let date = sentAt[0];
+                        let timeArray = sentAt[1].split(".");
+                        let time = timeArray[0];
                         let card = `<div class="card">
                                         <div class="card-body">
                                             <p class="card-text">${response[i].content}</p>
-                                            <p class="card-text"><small class="text-muted">${response[i].sentAt}</small></p>
+                                            <p class="card-text">
+                                            <small class="text-muted"><i class="fa fa-calendar"></i> ${date}</small>
+                                            <small class="text-muted"><i class="fa fa-clock-o"></i> ${time}</small>
+                                            </p>
                                         </div>
                                     </div>`;
                         list.append(card);
+                        // console.log(response[i].seen)
+                        if (!response[i].seen) {
+                            ++notif_count;
+                        }
                     }
-                    $(".get-drug-btn").css("pointer-events", "none")
-                        .removeClass('btn-primary')
-                        .addClass('btn-secondary');
+                    if (notif_count > 0) {
+                        $("#notifications-count").text(notif_count);
+                    } else {
+                        $("#notifications-count").hide();
+                    }
                 },
                 error: function (req, status, error) {
                     console.log(req);
@@ -136,9 +263,27 @@
             });
         }
 
+        let medTherapyStatus = $("#medicalTherapyStatus").val();
+        if (medTherapyStatus === "COMPLETED") {
+            updateNotifications();
+            $(".get-drug-btn").css("pointer-events", "none")
+                .removeClass('btn-primary')
+                .addClass('btn-secondary');
+        }
+
         $("#notifications-menu-btn").click(function () {
-            $("#notifications-count").text("");
             $(".notification-list").toggle();
+
+            $.ajax({
+                type: "GET",
+                url: "/api/notification/" + user + "/seen",
+                success: function (response) {
+                    updateNotifications()
+                },
+                error: function (req, status, error) {
+                    console.log(req);
+                }
+            });
         });
     });
 </script>

@@ -11,6 +11,7 @@ import mk.ukim.finki.mtmapp.service.MedicalTherapyService;
 import mk.ukim.finki.mtmapp.service.NotificationService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -113,7 +114,7 @@ public class MedicalTherapyServiceImpl implements MedicalTherapyService {
 
     @Override
     public List<MedicalTherapy> findAll() {
-        log.info("Getting all medical repositories");
+        log.info("Getting all medical therapies");
         return this.medicalTherapyRepository.findAll();
     }
 
@@ -121,9 +122,14 @@ public class MedicalTherapyServiceImpl implements MedicalTherapyService {
         User owner = medicalTherapy.getUser();
         StringBuilder content = new StringBuilder();
         content.append(String.format("Dear %s, you have completed your therapy for today.\n", owner.getFullName()));
-        content.append("Stockpiles left:");
-        for (Drug drug : medicalTherapy.getDrugs()) {
-            content.append(String.format("\n%s: %d", drug.getName(), drug.getStockpile()));
+        content.append("Stocks: ");
+        List<Drug> drugs = new ArrayList<>(medicalTherapy.getDrugs());
+        for (int i = 0; i < drugs.size(); i++) {
+            if (i == drugs.size() - 1) {
+                content.append(String.format("%s (%d).", drugs.get(i).getName(), drugs.get(i).getStockpile()));
+            } else {
+                content.append(String.format("%s (%d), ", drugs.get(i).getName(), drugs.get(i).getStockpile()));
+            }
         }
         this.notificationService.create(medicalTherapy.getUser(), content.toString());
     }

@@ -30,7 +30,7 @@ public class MedicalTherapy {
     @OneToMany(mappedBy = "medicalTherapy", orphanRemoval = true)
     private Collection<Drug> drugs;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Drug> drugsGotten;
 
     private MedicalTherapyStatus medicalTherapyStatus;
@@ -58,7 +58,7 @@ public class MedicalTherapy {
         this.medicalTherapyStatus = MedicalTherapyStatus.COMPLETED;
     }
 
-    public void refreshTherapyStatus() {
+    public void clearTherapyStatus() {
         this.getDrugsGotten().clear();
         this.medicalTherapyStatus = MedicalTherapyStatus.UNCOMPLETED;
     }

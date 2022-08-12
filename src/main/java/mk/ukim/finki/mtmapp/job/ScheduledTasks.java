@@ -14,12 +14,15 @@ public class ScheduledTasks {
 
     private final MedicalTherapyService medicalTherapyService;
 
-//    @Scheduled(fixedDelay = 30000)
-//    public void refreshMedicalTherapyStatus() {
-//        List<MedicalTherapy> medicalTherapies = this.medicalTherapyService.findAll();
-//        for (MedicalTherapy mt: medicalTherapies) {
-//            mt.refreshTherapyStatus();
-//            this.medicalTherapyService.update(mt);
-//        }
-//    }
+    // clearing therapy status, every day at noon
+    // 0/30 * * * * ? (every 30 seconds, for testing purposes)
+    @Scheduled(cron = "0 0 12 * * ?")
+    public void refreshMedicalTherapyStatus() {
+        // System.out.println("EXE");
+        List<MedicalTherapy> medicalTherapies = this.medicalTherapyService.findAll();
+        for (MedicalTherapy mt: medicalTherapies) {
+            mt.clearTherapyStatus();
+            this.medicalTherapyService.update(mt);
+        }
+    }
 }
