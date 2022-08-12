@@ -4,15 +4,16 @@
         <div class="container">
             <div class="row">
 
-                <div class="col-12 pb-5">
-                    <div>
-                        <button class="btn btn-dark btn-block"
+                <div class="row">
+                    <div class="col-12 pb-4 text-center">
+                        <button class="btn btn-success ml-3"
                                 data-toggle="modal"
                                 data-target="#addDrugModal">
                             Add new drug to therapy
                         </button>
                     </div>
                 </div>
+
                 <!-- Add drug modal -->
                 <div class="modal fade" id="addDrugModal" tabindex="-1" aria-labelledby="addDrugModalLabel"
                      aria-hidden="true">
@@ -90,10 +91,17 @@
                                 <div class="card-body">
                                     <h4 class="card-title"><b th:text="${drug.name}"></b></h4>
                                     <p><span>Use <b class="card-text" th:text="${drug.use}"></b></span></p>
-                                    <p><span>Dose <b class="card-text" th:text="${drug.dose}"></b></span></p>
-                                    <a th:href="@{'/drug/'+ ${drug.id} + '/get'}" class="btn btn-primary get-drug-btn w-25"
+                                    <p><span><b class="card-text" th:text="${drug.dose}"></b>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-capsule" viewBox="0 0 16 16">
+                                      <path fill-rule="evenodd"
+                                            d="M1.828 8.9 8.9 1.827a4 4 0 1 1 5.657 5.657l-7.07 7.071A4 4 0 1 1 1.827 8.9Zm9.128.771 2.893-2.893a3 3 0 1 0-4.243-4.242L6.713 5.429l4.243 4.242Z"/>
+                                    </svg>
+                                    </span></p>
+                                    <a th:href="@{'/drug/'+ ${drug.id} + '/get'}"
+                                       class="btn btn-primary get-drug-btn w-25"
                                        th:data-stock="${drug.stockpile >= drug.dose}">
-                                        Get
+                                        GET
                                     </a>
                                 </div>
                                 <div class="card-footer text-muted">
@@ -103,7 +111,8 @@
                         </div>
 
                         <!-- Edit drug modal -->
-                        <div class="modal fade" th:id="'editDrugModal-' + ${drug.id}" tabindex="-1" aria-labelledby="editDrugModalLabel"
+                        <div class="modal fade" th:id="'editDrugModal-' + ${drug.id}" tabindex="-1"
+                             aria-labelledby="editDrugModalLabel"
                              aria-hidden="true">
                             <div class="modal-dialog">
                                 <form th:method="post" th:action="@{'/drug/{id}/edit' (id=${drug.id})}">
@@ -229,7 +238,7 @@
                 url: "/api/notification/" + user,
                 success: function (response) {
                     let notif_count = 0;
-
+                    Array.prototype.reverse.call(response);
                     let list = $(".notification-list").empty();
                     for (let i = 0; i < response.length; i++) {
                         let sentAt = response[i].sentAt.split("T");
@@ -239,7 +248,7 @@
                         let card = `<div class="card">
                                         <div class="card-body">
                                             <p class="card-text">${response[i].content}</p>
-                                            <p class="card-text">
+                                            <p class="card-text d-flex justify-content-between">
                                             <small class="text-muted"><i class="fa fa-calendar"></i> ${date}</small>
                                             <small class="text-muted"><i class="fa fa-clock-o"></i> ${time}</small>
                                             </p>

@@ -38,9 +38,11 @@ public class MtmAppApplication {
 
         // Drugs
         DrugRepository drugRepository = configurableApplicationContext.getBean(DrugRepository.class);
-        Drug drug = new Drug("Lek 1", 2, Use.BEFORE_BREAKFAST, 3, medicalTherapy);
+        Drug drug = new Drug("Sanval", 2, Use.AFTER_DINNER, 3, medicalTherapy);
         drugRepository.save(drug);
-        drug = new Drug("Lek 2", 1, Use.AFTER_DINNER, 45, medicalTherapy);
+        drug = new Drug("Heleks", 1, Use.BEFORE_BREAKFAST, 45, medicalTherapy);
+        drugRepository.save(drug);
+        drug = new Drug("Vitamin C", 1, Use.BEFORE_LUNCH, 20, medicalTherapy);
         drugRepository.save(drug);
 
         medicalTherapy.getDrugs().add(drug);
