@@ -74,7 +74,7 @@
 
                 <div class="col-12">
                     <div class="row" th:each="drug : ${medicalTherapy.drugs}"> <!-- As many as number_of_drugs -->
-                        <div class="col-12 mb-3">
+                        <div class="col-12 mb-4">
                             <div class="card text-center">
                                 <div class="card-header">
                                     <ul class="nav nav-pills card-header-pills">
@@ -89,15 +89,15 @@
                                     </ul>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title"><b th:text="${drug.name}"></b></h4>
+                                    <h3 class="card-title"><b th:text="${drug.name}"></b></h3>
                                     <p><span>Use <b class="card-text" th:text="${drug.use}"></b></span></p>
-                                    <p><span><b class="card-text" th:text="${drug.dose}"></b>
+                                    <h5 class="pb-2"><span><b class="card-text" th:text="${drug.dose}"></b>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                          class="bi bi-capsule" viewBox="0 0 16 16">
                                       <path fill-rule="evenodd"
                                             d="M1.828 8.9 8.9 1.827a4 4 0 1 1 5.657 5.657l-7.07 7.071A4 4 0 1 1 1.827 8.9Zm9.128.771 2.893-2.893a3 3 0 1 0-4.243-4.242L6.713 5.429l4.243 4.242Z"/>
                                     </svg>
-                                    </span></p>
+                                    </span></h5>
                                     <a th:href="@{'/drug/'+ ${drug.id} + '/get'}"
                                        class="btn btn-primary get-drug-btn w-25"
                                        th:data-stock="${drug.stockpile >= drug.dose}">
