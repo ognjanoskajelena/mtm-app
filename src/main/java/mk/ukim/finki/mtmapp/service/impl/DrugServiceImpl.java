@@ -49,7 +49,7 @@ public class DrugServiceImpl implements DrugService {
         Optional<MedicalTherapy> medicalTherapy = this.medicalTherapyRepository.findById(therapyId);
         if (medicalTherapy.isPresent()) {
             Drug drug = new Drug(name, dose, use, stockpile, medicalTherapy.get()); // medical therapy - all set
-            for (String sideEffect: sideEffects) {
+            for (String sideEffect : sideEffects) {
                 drug.addSideEffect(new SideEffect(sideEffect, drug));
             }
             log.info("Saving new drug for therapy with id: {}", therapyId);
@@ -75,7 +75,17 @@ public class DrugServiceImpl implements DrugService {
 
     @Override
     public void deleteById(Long id) {
-        this.drugRepository.deleteById(id);
+        log.info("Getting drug by id: {}", id);
+        Optional<Drug> optionalDrug = this.findById(id);
+        if (optionalDrug.isPresent()) {
+            MedicalTherapy medicalTherapy = optionalDrug.get().getMedicalTherapy();
+            medicalTherapy.getDrugsGotten().remove(optionalDrug.get());
+            this.medicalTherapyRepository.save(medicalTherapy);
+            log.info("Deleting drug by id: {}", id);
+            this.drugRepository.deleteById(id);
+            return;
+        }
+        throw new RuntimeException(String.format("Drug with id: %d not found!", id));
     }
 
     @Override
@@ -109,6 +119,7 @@ public class DrugServiceImpl implements DrugService {
             Drug drug = optionalDrug.get();
             drug.getSideEffects().clear();
             this.drugRepository.save(drug);
+            return;
         }
         throw new RuntimeException(String.format("Drug with id: %d not found!", id));
     }
