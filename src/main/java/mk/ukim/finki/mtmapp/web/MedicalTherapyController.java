@@ -24,7 +24,6 @@ public class MedicalTherapyController {
         if (optionalUser.isPresent()) {
             model.addAttribute("headTitle", "Medical therapy");
             model.addAttribute("style1", "header.css");
-            // model.addAttribute("style2", "med-therapy.css");
             model.addAttribute("bodyContent", "med-therapy");
 
             User user = optionalUser.get();

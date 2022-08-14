@@ -27,7 +27,7 @@
 
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    Login
+                                    Sign in
                                 </button>
                             </div>
                         </form>
@@ -36,7 +36,7 @@
                             <h6 class="pt-5 pb-1">
                                 Not registered yet?
                             </h6>
-                            <a href="/register" class="btn btn-light my-sm-0" th:if="${#request.getRemoteUser() == null}">
+                            <a href="/register" class="btn btn-outline-success my-sm-0" th:if="${#request.getRemoteUser() == null}">
                                 Sign up
                             </a>
                         </div>
