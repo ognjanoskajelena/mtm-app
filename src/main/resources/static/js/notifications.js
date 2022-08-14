@@ -1,7 +1,9 @@
 $(document).ready(function () {
     let user = $("#principalName").val();
 
-    updateNotifications(user);
+    if (user !== undefined) {
+        updateNotifications(user);
+    }
 
     $("#notifications-menu-btn").click(function () {
         $(".notification-list").toggle();

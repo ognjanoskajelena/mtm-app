@@ -11,7 +11,7 @@ public class HomeController {
 
     @GetMapping
     public String getHomePage(Model model) {
-        model.addAttribute("headTitle", "About us");
+        model.addAttribute("headTitle", "Home");
         model.addAttribute("style1", "header.css");
         model.addAttribute("style2", "home.css");
         model.addAttribute("style3", "footer.css");
