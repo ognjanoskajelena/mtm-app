@@ -28,7 +28,7 @@ public class MtmAppApplication {
         // User
         UserRepository userRepository =
                 configurableApplicationContext.getBean(UserRepository.class);
-        User test = new User("Test", "Test", "test", "tt",
+        User test = new User("Test", "Test", "test", "test",
                 "test@test.com", 45);
         userRepository.save(test);
 
