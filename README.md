@@ -19,3 +19,14 @@ to have the possibility to change them, to monitor and to be notified about the 
 #### Purpose
 The purpose of this drug therapy management application would be to make it easier for users who have regular drug therapies on a daily basis, to track their therapy and 
 in addition to serve as a helper who will remind them.
+
+#### Demo
+###### Login
+In-memory stored credentials which can be used for login:
+* username: test
+* password: test
+###### Medical therapy status refresh
+*Medical therapy status* is refreshed every day at noon and set as *incomplete* for the following day.
+To review this functionality replace the 
+[**cron**](https://github.com/ognjanoskajelena/mtm-app/blob/c8a677275ce47814985c87bf8b58a6aea8607f23/src/main/java/mk/ukim/finki/mtmapp/job/ScheduledTasks.java#L19) 
+value with ```0/30 * * * * ?```, and the status will refresh after every 30 seconds.
